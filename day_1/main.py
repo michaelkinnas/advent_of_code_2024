@@ -1,4 +1,4 @@
-file = open('lists.txt', 'r')
+file = open('./day_1/data', 'r')
 lists = file.read().replace("\n", "   ").split("   ")
 
 column_1 = []
