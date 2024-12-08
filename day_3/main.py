@@ -36,8 +36,7 @@ result2 = 0
 enabled = True
 for i, char in enumerate(data):
     # print(data[i:i+7])
-    if data[i:i+7] == "don't()":
-        
+    if data[i:i+7] == "don't()":        
         enabled = False
     
     if data[i:i+4] == "do()":
