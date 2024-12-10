@@ -1,4 +1,4 @@
-data = open('day_6/test.txt', 'r').read().splitlines()
+data = open('day_6/data.txt', 'r').read().splitlines()
 
 floor = [[x for x in line] for line in data]
 
@@ -18,7 +18,7 @@ class Guard:
         if self.direction == 'v':
             self.pos_y += 1
     
-    def has_obstacle_ahead(self, floor):
+    def has_obstacle_ahead(self, floor):        
         if self.direction == '>' and floor[self.pos_y][self.pos_x + 1] == '#':
             return True
         if self.direction == '<' and floor[self.pos_y][self.pos_x - 1] == '#':
@@ -44,7 +44,7 @@ class Guard:
             return True
         if self.pos_x == 0 and self.direction == '<':
             return True        
-        if self.pos_y == len(floor)-1 and self.direction == 'v':
+        if self.pos_y == len(floor)-1 and self.direction == 'v':            
             return True
         if self.pos_y == 0 and self.direction == '^':
             return True
@@ -106,7 +106,6 @@ def is_position_visited_again(x, y, guard_direction, floor):
 
 def mark_visited_location_and_direction(x, y, guard_direction, floor):
     floor[y][x] = guard_direction
-
                 
 def print_floor(floor):
     stra = ''
@@ -116,14 +115,12 @@ def print_floor(floor):
         stra += '\n'
     print(stra)
 
-
-
+floor = [[x for x in line] for line in data]
 loops = 0
-for i in range(len(floor)):
-    print(f"At line {i}")
-    for j in range(len(floor[i])):
+for y in range(len(floor)):
+    for x in range(len(floor[y])):
+        if floor[y][x] == '#' or floor[y][x] == '^': continue
         temp = [[x for x in line] for line in data]
-        temp[i][j] = '#'
 
         pos_x, pos_y = None, None
         direction = None
@@ -131,26 +128,25 @@ for i in range(len(floor)):
             for j in range(len(temp[i])):
                 if temp[i][j] in ['v', '^', '<', '>']:
                     pos_x, pos_y = j, i
-                    direction = temp[i][j]
+                    direction = temp[i][j]        
+
+        temp[y][x] = '#'
+        
         #initialize guard at initial position
         guard = Guard(pos_x=pos_x, pos_y=pos_y, direction=direction)
 
-        #mark initial position
-        mark_visited_location_and_direction(guard.pos_x, guard.pos_y, guard.direction, temp)
-
-        while (not guard.is_at_border_looking_out(temp)):
-            # print(f"Guard is at position {guard.pos_x} {guard.pos_y} with direction {guard.direction}")
-            print_floor(temp)
-      
-            if guard.has_obstacle_ahead(temp):
-                guard.turn_right()
-            # else:                
-            guard.move_forward()
-
-            if guard.is_current_position_visited_again(temp):
-                loops += 1
+        while (True):
+            if guard.is_at_border_looking_out(temp): 
                 break
 
-            mark_visited_location_and_direction(guard.pos_x, guard.pos_y, guard.direction, temp)
+            if guard.is_position_ahead_visited_again(temp):
+                loops += 1
+                break      
+            if guard.has_obstacle_ahead(temp):
+                guard.turn_right()
+            else:
+                guard.move_forward()
+                mark_visited_location_and_direction(guard.pos_x, guard.pos_y, guard.direction, temp)       
+        
 
-print(loops)
+print("Part 2: ", loops)
