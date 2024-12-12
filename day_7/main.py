@@ -13,7 +13,7 @@ for ans, nums in zip(answer, number):
         result = nums[0]
         for j in range(len(operation_combinations[i])):
             if operation_combinations[i][j] == '+':
-                result += nums[j+1] 
+                result += nums[j+1]
             elif operation_combinations[i][j] == '*':
                 result *= nums[j+1]
         if result == ans:
@@ -31,7 +31,7 @@ for ans, nums in zip(answer, number):
         result = nums[0]
         for j in range(len(operation_combinations[i])):
             if operation_combinations[i][j] == '+':
-                result += nums[j+1] 
+                result += nums[j+1]
             elif operation_combinations[i][j] == '*':
                 result *= nums[j+1]
             elif operation_combinations[i][j] == '||': #just add this thingy lol. python is so easy
