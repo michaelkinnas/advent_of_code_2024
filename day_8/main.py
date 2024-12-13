@@ -89,7 +89,6 @@ def find_antinodes_from_this_position(pos_x, pos_y, grid):
 
 def mark_antinodes(blocked_positions, grid):
     for (x, y) in blocked_positions:
-        # if grid[y][x] not in frequencies:
         grid[y][x] = '#'
 
 
